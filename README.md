@@ -49,6 +49,9 @@ for determining the appropriateness of using or redistributing the software
 and assume ay risks associated with your exercise of permissions under the license.
 ```
 
+## Build
+See BUILD.md for detail
+
 ## Maintainer
 See MAINTAINERS.md for detail
 layer maintainer: Hongxu Jia <hongxu.jia@windriver.com>
