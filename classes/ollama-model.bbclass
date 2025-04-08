@@ -22,6 +22,8 @@ RDEPENDS:${PN} = " \
     ollama \
 "
 
+S = "${DL_DIR}"
+
 do_unpack[noexec] = "1"
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"

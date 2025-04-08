@@ -3,7 +3,7 @@ SUMMARY = "DeepSeek's first-generation of reasoning models with comparable \
 performance to OpenAI-o1, including six dense models distilled from \
 DeepSeek-R1 based on Llama and Qwen."
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://${DL_DIR}/sha256-${LICESE_SHA256};md5=140979a28c4181c91b6216add7b69045"
+LIC_FILES_CHKSUM = "file://sha256-${LICESE_SHA256};md5=140979a28c4181c91b6216add7b69045"
 
 BPN = "deepseek-r1"
 
