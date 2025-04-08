@@ -1,14 +1,14 @@
-OLLAMA_DEEPSEEK_URI = "https://registry.ollama.ai/v2/library/${BPN}"
+OLLAMA_URI = "https://registry.ollama.ai/v2/library/${BPN}"
 
 MODEL_TAG ??= "${PV}"
 
 SRC_URI = " \
-    ${OLLAMA_DEEPSEEK_URI}/manifests/${MODEL_TAG};name=manifest; \
-    ${OLLAMA_DEEPSEEK_URI}/blobs/sha256-${IMAGE_JSON_SHA256};name=image_json; \
-    ${OLLAMA_DEEPSEEK_URI}/blobs/sha256-${PARAMS_SHA256};name=params; \
-    ${OLLAMA_DEEPSEEK_URI}/blobs/sha256-${LICESE_SHA256};name=license; \
-    ${OLLAMA_DEEPSEEK_URI}/blobs/sha256-${TEMPLATE_SHA256};name=template; \
-    ${OLLAMA_DEEPSEEK_URI}/blobs/sha256-${MODEL_SHA256};name=model; \
+    ${OLLAMA_URI}/manifests/${MODEL_TAG};name=manifest; \
+    ${OLLAMA_URI}/blobs/sha256-${IMAGE_JSON_SHA256};name=image_json; \
+    ${OLLAMA_URI}/blobs/sha256-${PARAMS_SHA256};name=params; \
+    ${OLLAMA_URI}/blobs/sha256-${LICESE_SHA256};name=license; \
+    ${OLLAMA_URI}/blobs/sha256-${TEMPLATE_SHA256};name=template; \
+    ${OLLAMA_URI}/blobs/sha256-${MODEL_SHA256};name=model; \
 "
 
 SRC_URI[manifest.sha256sum] = "${MANIFEST_SHA256}"
