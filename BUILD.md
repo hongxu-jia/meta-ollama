@@ -17,7 +17,10 @@ $ echo 'INIT_MANAGER = "systemd"' >> conf/local.conf
 
 # Enable ollama feature
 $ echo 'DISTRO_FEATURES_NATIVE:append = " ollama"' >> conf/local.conf
-$ echo 'IMAGE_INSTALL:append = " deepseek-r1-7b"' >> conf/local.conf
+
+# Install gemma2:2b model
+# https://ollama.com/library/gemma2:2b
+$ echo 'IMAGE_INSTALL:append = " gemma2-2b"' >> conf/local.conf
 
 # Add layer meta-ollama to build
 $ bitbake-layers add-layer <project>/meta-ollama
@@ -34,7 +37,7 @@ $ bitbake core-image-minimal
 $ runqemu tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.rootfs.qemuboot.conf slirp kvm qemuparams="-m 10240"
 ```
 
-## 5. Run deepseek-r1:7b model
+## 5. Run gemma2:2b model
 ```
 root@qemux86-64:~# systemctl status ollama
 * ollama.service - Ollama Service
@@ -61,10 +64,13 @@ Mar 07 13:51:48 qemux86-64 ollama[254]: time=2025-03-07T13:51:48.872Z level=INFO
 Hint: Some lines were ellipsized, use -l to show in full.
 
 root@qemux86-64:~# ollama list
-NAME              ID              SIZE      MODIFIED     
-deepseek-r1:7b    0a8c26691023    4.7 GB    13 years ago    
+NAME         ID              SIZE      MODIFIED
+gemma2:2b    8ccf136fdd52    1.6 GB    14 years ago
 
-root@qemux86-64:~# ollama run deepseek-r1:7b
+root@qemux86-64:~# ollama run gemma2:2b
+>>> hi
+Hello! 👋  How can I help you today? 😊
+
 >>> Send a message (/? for help)
 ```
 
