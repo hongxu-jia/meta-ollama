@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://src/import/LICENSE;md5=a8abe7311c869aba169d640cf367a4
 
 # Specify the first two important SRCREVs as the format
 SRCREV_FORMAT="ollama_cgroups"
-SRCREV_ollama = "8c13cfa4dd35a79c983eb19b5ec2be7ffa220b69"
+SRCREV_ollama = "6a74bba7e7e19bf5f5aeacb039a1537afa3522a5"
 
 SRC_URI = " \
     git://github.com/ollama/ollama.git;name=ollama;branch=main;protocol=https;destsuffix=${GO_SRCURI_DESTSUFFIX} \

@@ -7,8 +7,9 @@ export sites="golang.org/x/exp:golang.org/x/exp:force \
            golang.org/x/term:golang.org/x/term:force \
            golang.org/x/text:golang.org/x/text:force \
            golang.org/x/image:golang.org/x/image:force \
-           gonum.org/v1/gonum:gonum.org/v1/gonum:force \
+           golang.org/x/tools:golang.org/x/tools:force \
            github.com/kr/text:github.com/kr/text:force \
+           gonum.org/v1/gonum:gonum.org/v1/gonum:force \
            github.com/xtgo/set:github.com/xtgo/set:force \
            gorgonia.org/vecf32:gorgonia.org/vecf32:force \
            gorgonia.org/vecf64:gorgonia.org/vecf64:force \
@@ -70,13 +71,28 @@ do_compile:prepend() {
         site_dest=$(echo $s | cut -d: -f1)
         site_source=$(echo $s | cut -d: -f2)
         force_flag=$(echo $s | cut -d: -f3)
+
         mkdir -p vendor.copy/$site_dest
+
+        # create a temporary exclude file
+        exclude_file=$(mktemp)
+
+        find vendor.fetch/$site_source -type d -print0 |         xargs -0 du -sBM 2>/dev/null |         awk '{if ($1+0 > 500) print substr($0, index($0,$2))}' |         sed 's|^vendor.fetch/||' > "$exclude_file"
+
         if [ -n "$force_flag" ]; then
             echo "[INFO] $site_dest: force copying .go files"
             rm -rf vendor.copy/$site_dest
-            rsync -a --exclude='vendor/' --exclude='.git/' vendor.fetch/$site_source/ vendor.copy/$site_dest
+            rsync -a                 --exclude='vendor/'                 --exclude='.git/'                 --exclude-from="$exclude_file"                 vendor.fetch/$site_source/ vendor.copy/$site_dest
         else
-            [ -n "$(ls -A vendor.copy/$site_dest/*.go 2> /dev/null)" ] && { echo "[INFO] vendor.fetch/$site_source -> $site_dest: go copy skipped (files present)" ; true ; } || { echo "[INFO] $site_dest: copying .go files" ; rsync -a --exclude='vendor/' --exclude='.git/' vendor.fetch/$site_source/ vendor.copy/$site_dest ; }
+            if [ -n "$(ls -A vendor.copy/$site_dest/*.go 2> /dev/null)" ]; then
+                echo "[INFO] vendor.fetch/$site_source -> $site_dest: go copy skipped (files present)"
+                true
+            else
+                echo "[INFO] $site_dest: copying .go files"
+                rsync -a                     --exclude='vendor/'                     --exclude='.git/'                     --exclude-from="$exclude_file"                     vendor.fetch/$site_source/ vendor.copy/$site_dest
+            fi
         fi
+
+        rm -f "$exclude_file"
     done
 }
