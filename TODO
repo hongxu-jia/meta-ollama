@@ -1,7 +1,3 @@
 Future plan
 -----------
 - AMD GPU support(ROCm)  
-- NVIDIA GPU supporti  
-  - CUDA  
-  - NVIDIA JetPack  
-
