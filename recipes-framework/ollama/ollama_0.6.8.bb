@@ -23,9 +23,7 @@ DEPENDS += " \
     rsync-native \
 "
 
-S = "${WORKDIR}/git"
-
-OECMAKE_SOURCEPATH = "${WORKDIR}/git/src/import"
+OECMAKE_SOURCEPATH = "${S}/src/import"
 
 export OECMAKE_FORCE_CROSSCOMPILING = '1'
 
