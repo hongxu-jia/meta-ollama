@@ -4,7 +4,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://src/import/LICENSE;md5=a8abe7311c869aba169d640cf367a4af"
 
 # Specify the first two important SRCREVs as the format
-SRCREV_FORMAT="ollama_cgroups"
+SRCREV_FORMAT = "ollama_cgroups"
 SRCREV_ollama = "6a74bba7e7e19bf5f5aeacb039a1537afa3522a5"
 
 SRC_URI = " \
