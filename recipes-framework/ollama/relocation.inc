@@ -1,6 +1,7 @@
-export sites = "golang.org/x/exp:golang.org/x/exp:force \
+export sites = "golang.org/x/sys:golang.org/x/sys:force \
+           golang.org/x/mod:golang.org/x/mod:force \
+           golang.org/x/exp:golang.org/x/exp:force \
            golang.org/x/net:golang.org/x/net:force \
-           golang.org/x/sys:golang.org/x/sys:force \
            gopkg.in/yaml.v3:gopkg.in/yaml.v3:force \
            golang.org/x/sync:golang.org/x/sync:force \
            golang.org/x/arch:golang.org/x/arch:force \
@@ -8,8 +9,8 @@ export sites = "golang.org/x/exp:golang.org/x/exp:force \
            golang.org/x/text:golang.org/x/text:force \
            golang.org/x/image:golang.org/x/image:force \
            golang.org/x/tools:golang.org/x/tools:force \
-           github.com/kr/text:github.com/kr/text:force \
            gonum.org/v1/gonum:gonum.org/v1/gonum:force \
+           github.com/kr/text:github.com/kr/text:force \
            github.com/xtgo/set:github.com/xtgo/set:force \
            gorgonia.org/vecf32:gorgonia.org/vecf32:force \
            gorgonia.org/vecf64:gorgonia.org/vecf64:force \
@@ -27,17 +28,22 @@ export sites = "golang.org/x/exp:golang.org/x/exp:force \
            github.com/chewxy/math32:github.com/chewxy/math32:force \
            github.com/gogo/protobuf:github.com/gogo/protobuf:force \
            github.com/goccy/go-json:github.com/goccy/go-json:force \
+           github.com/ledongthuc/pdf:github.com/ledongthuc/pdf:force \
            github.com/pdevine/tensor:github.com/pdevine/tensor:force \
            github.com/cloudwego/iasm:github.com/cloudwego/iasm:force \
            github.com/leodido/go-urn:github.com/leodido/go-urn:force \
            github.com/golang/protobuf:github.com/golang/protobuf:force \
            github.com/dlclark/regexp2:github.com/dlclark/regexp2:force \
            github.com/davecgh/go-spew:github.com/davecgh/go-spew:force \
+           github.com/mailru/easyjson:github.com/mailru/easyjson:force \
            github.com/bytedance/sonic:github.com/bytedance/sonic:force \
            github.com/gin-contrib/sse:github.com/gin-contrib/sse:force \
            github.com/mattn/go-isatty:github.com/mattn/go-isatty:force \
            google.golang.org/protobuf:google.golang.org/protobuf:force \
+           github.com/TheTitanrain/w32:github.com/TheTitanrain/w32:force \
+           github.com/mattn/go-sqlite3:github.com/mattn/go-sqlite3:force \
            github.com/stretchr/testify:github.com/stretchr/testify:force \
+           github.com/buger/jsonparser:github.com/buger/jsonparser:force \
            github.com/gin-contrib/cors:github.com/gin-contrib/cors:force \
            github.com/json-iterator/go:github.com/json-iterator/go:force \
            github.com/d4l3k/go-bfloat16:github.com/d4l3k/go-bfloat16:force \
@@ -54,6 +60,9 @@ export sites = "golang.org/x/exp:golang.org/x/exp:force \
            github.com/agnivade/levenshtein:github.com/agnivade/levenshtein:force \
            github.com/modern-go/concurrent:github.com/modern-go/concurrent:force \
            github.com/pelletier/go-toml/v2:github.com/pelletier/go-toml/v2:force \
+           github.com/wk8/go-ordered-map/v2:github.com/wk8/go-ordered-map/v2:force \
+           github.com/bahlo/generic-list-go:github.com/bahlo/generic-list-go:force \
+           github.com/tkrajina/go-reflector:github.com/tkrajina/go-reflector:force \
            github.com/go-playground/locales:github.com/go-playground/locales:force \
            github.com/olekukonko/tablewriter:github.com/olekukonko/tablewriter:force \
            go4.org/unsafe/assume-no-moving-gc:go4.org/unsafe/assume-no-moving-gc:force \
@@ -63,7 +72,8 @@ export sites = "golang.org/x/exp:golang.org/x/exp:force \
            github.com/bytedance/sonic/loader:github.com/bytedance/sonic/loader/loader:force \
            github.com/twitchyliquid64/golang-asm:github.com/twitchyliquid64/golang-asm:force \
            github.com/go-playground/validator/v10:github.com/go-playground/validator/v10:force \
-           github.com/go-playground/universal-translator:github.com/go-playground/universal-translator:force"
+           github.com/go-playground/universal-translator:github.com/go-playground/universal-translator:force \
+           github.com/tkrajina/typescriptify-golang-structs:github.com/tkrajina/typescriptify-golang-structs:force"
 
 do_compile:prepend() {
     cd ${S}/src/import

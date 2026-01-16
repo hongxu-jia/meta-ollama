@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://src/import/LICENSE;md5=a8abe7311c869aba169d640cf367a4
 
 # Specify the first two important SRCREVs as the format
 SRCREV_FORMAT = "ollama_cgroups"
-SRCREV_ollama = "6a74bba7e7e19bf5f5aeacb039a1537afa3522a5"
+SRCREV_ollama = "55d0b6e8b9498a621565c93625b7e29c96812f21"
 
 SRC_URI = " \
     git://github.com/ollama/ollama.git;name=ollama;branch=main;protocol=https;destsuffix=${GO_SRCURI_DESTSUFFIX} \
@@ -47,7 +47,7 @@ do_compile:append() {
     # inform go that we know what we are doing
     cp ${UNPACKDIR}/modules.txt vendor/
 
-    ${GO} build -v ${GOBUILDFLAGS} -o ${B}/bin/ollama
+    ${GO} build -v ${GOBUILDFLAGS} -o ${B}/bin/ollama -ldflags="-X=github.com/ollama/ollama/version.Version=${PV} -X=github.com/ollama/ollama/server.mode=release"
 }
 
 do_install:append() {
@@ -68,8 +68,8 @@ USERADD_PARAM:${PN} = " \
     ollama"
 GROUPADD_PARAM:${PN} = "-r render"
 
-INSANE_SKIP:${PN} += "libdir"
-INSANE_SKIP:${PN}-dbg += "libdir"
+INSANE_SKIP:${PN} += "libdir dev-so file-rdeps"
+INSANE_SKIP:${PN}-dbg += "libdir dev-so file-rdeps"
 
 SYSTEMD_SERVICE:${PN} = "ollama.service"
 
