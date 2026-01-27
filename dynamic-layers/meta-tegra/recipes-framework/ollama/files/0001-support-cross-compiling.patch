@@ -1,6 +1,6 @@
-From 4485bd39b06e77059be370231a966545b6141f19 Mon Sep 17 00:00:00 2001
+From 7a856558d1fab47b927debe6957f3ef3b1e25d3a Mon Sep 17 00:00:00 2001
 From: Hongxu Jia <hongxu.jia@windriver.com>
-Date: Fri, 16 May 2025 15:40:59 +0800
+Date: Mon, 19 Jan 2026 14:29:14 +0800
 Subject: [PATCH] support cross compiling
 
 Use target directory to instead of native directory
@@ -12,22 +12,29 @@ Upstream-Status: Inappropriate [Yocto specific]
 
 Signed-off-by: Hongxu Jia <hongxu.jia@windriver.com>
 ---
- CMakeLists.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/src/import/CMakeLists.txt b/src/import/CMakeLists.txt
-index 5343d877..6b22e16f 100644
---- a/src/import/CMakeLists.txt
-+++ b/src/import/CMakeLists.txt
-@@ -79,7 +79,7 @@ if(CMAKE_CUDA_COMPILER)
-     set(OLLAMA_CUDA_INSTALL_DIR ${OLLAMA_INSTALL_DIR}/cuda_v${CUDAToolkit_VERSION_MAJOR})
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f6bfc52d1..ff805fb50 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -105,7 +105,7 @@ if(CMAKE_CUDA_COMPILER)
+     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ml/backend/ggml/ggml/src/ggml-cuda)
      install(TARGETS ggml-cuda
          RUNTIME_DEPENDENCIES
--            DIRECTORIES ${CUDAToolkit_BIN_DIR} ${CUDAToolkit_LIBRARY_DIR}
-+            DIRECTORIES ${CUDA_TOOLKIT_TARGET_DIR}/bin ${CUDA_TOOLKIT_TARGET_DIR}/lib
+-            DIRECTORIES ${CUDAToolkit_BIN_DIR} ${CUDAToolkit_BIN_DIR}/x64 ${CUDAToolkit_LIBRARY_DIR}
++            DIRECTORIES ${CUDA_TOOLKIT_TARGET_DIR}/bin ${CUDA_TOOLKIT_TARGET_DIR}/lib  ${CUDAToolkit_BIN_DIR} ${CUDAToolkit_BIN_DIR}/x64 ${CUDAToolkit_LIBRARY_DIR}
              PRE_INCLUDE_REGEXES cublas cublasLt cudart
              PRE_EXCLUDE_REGEXES ".*"
-         RUNTIME DESTINATION ${OLLAMA_CUDA_INSTALL_DIR} COMPONENT CUDA
+         RUNTIME DESTINATION ${OLLAMA_INSTALL_DIR} COMPONENT CUDA
+@@ -216,4 +216,4 @@ if(MLX_ENGINE)
+                 COMPONENT MLX)
+         endif()
+     endif()
+-endif()
+\ No newline at end of file
++endif()
 -- 
 2.34.1
 
