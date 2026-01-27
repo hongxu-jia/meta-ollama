@@ -4,18 +4,19 @@
 $ mkdir <project>
 $ cd <project>
 $ git clone --branch main https://github.com/hongxu-jia/meta-ollama.git
-$ git clone --branch master https://git.yoctoproject.org/poky
+$ git clone --branch master git://git.openembedded.org/openembedded-core oe-core
+$ git clone --branch master git://git.openembedded.org/bitbake oe-core/bitbake
 ```
 
 ## 2. Prepare build
 ```
-$ . <project>/poky/oe-init-build-env <build>
+$ . <project>/oe-core/oe-init-build-env <build>
 
 # Build qemux86-64 with systemd.
 $ echo 'MACHINE = "qemux86-64"' >> conf/local.conf
 $ echo 'INIT_MANAGER = "systemd"' >> conf/local.conf
 
-# Enable ollama feature
+# Enable ollama feature for cmake-native
 $ echo 'DISTRO_FEATURES_NATIVE:append = " ollama"' >> conf/local.conf
 
 # Install gemma2:2b model
@@ -34,43 +35,54 @@ $ bitbake core-image-minimal
 
 ## 4. Start qemu with slrip + kvm + 10GB memory:
 ```
-$ runqemu tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.rootfs.qemuboot.conf slirp kvm qemuparams="-m 10240"
+$ runqemu tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.rootfs.qemuboot.conf slirp kvm qemuparams="-m 10240" snapshot
 ```
 
 ## 5. Run gemma2:2b model
 ```
+root@qemux86-64:~# ollama ps
+NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL 
 root@qemux86-64:~# systemctl status ollama
 * ollama.service - Ollama Service
      Loaded: loaded (/usr/lib/systemd/system/ollama.service; enabled; preset: enabled)
-     Active: active (running) since Fri 2025-03-07 13:51:48 UTC; 8s ago
- Invocation: 7e9d8924ee9f4ffcbb2bdd65800e9545
-   Main PID: 254 (ollama)
-      Tasks: 8 (limit: 12019)
-     Memory: 33.2M (peak: 33.5M)
-        CPU: 310ms
+     Active: active (running) since Thu 2026-01-29 03:27:41 UTC; 14s ago
+ Invocation: 8d0adfb243f44029a27da36676d21b98
+   Main PID: 257 (ollama)
+      Tasks: 9 (limit: 12020)
+     Memory: 50.3M (peak: 60.7M)
+        CPU: 169ms
      CGroup: /system.slice/ollama.service
-             `-254 /usr/bin/ollama serve
+             `-257 /usr/bin/ollama serve
 
-Mar 07 13:51:48 qemux86-64 ollama[254]: [GIN-debug] POST   /api/embeddings           --> github.com/ollama/ollama/server.(*Server).EmbeddingsHandler-fm (5 handlers)
-Mar 07 13:51:48 qemux86-64 ollama[254]: [GIN-debug] POST   /v1/chat/completions      --> github.com/ollama/ollama/server.(*Server).ChatHandler-fm (6 handlers)
-Mar 07 13:51:48 qemux86-64 ollama[254]: [GIN-debug] POST   /v1/completions           --> github.com/ollama/ollama/server.(*Server).GenerateHandler-fm (6 handlers)
-Mar 07 13:51:48 qemux86-64 ollama[254]: [GIN-debug] POST   /v1/embeddings            --> github.com/ollama/ollama/server.(*Server).EmbedHandler-fm (6 handlers)
-Mar 07 13:51:48 qemux86-64 ollama[254]: [GIN-debug] GET    /v1/models                --> github.com/ollama/ollama/server.(*Server).ListHandler-fm (6 handlers)
-Mar 07 13:51:48 qemux86-64 ollama[254]: [GIN-debug] GET    /v1/models/:model         --> github.com/ollama/ollama/server.(*Server).ShowHandler-fm (6 handlers)
-Mar 07 13:51:48 qemux86-64 ollama[254]: time=2025-03-07T13:51:48.859Z level=INFO source=routes.go:1256 msg="Listening on 127.0.0.1:11434 (version 0.0.0)"
-Mar 07 13:51:48 qemux86-64 ollama[254]: time=2025-03-07T13:51:48.860Z level=INFO source=gpu.go:217 msg="looking for compatible GPUs"
-Mar 07 13:51:48 qemux86-64 ollama[254]: time=2025-03-07T13:51:48.872Z level=INFO source=gpu.go:377 msg="no compatible GPUs were discovered"
-Mar 07 13:51:48 qemux86-64 ollama[254]: time=2025-03-07T13:51:48.872Z level=INFO source=types.go:130 msg="inference compute" id=0 library=cpu variant="" compute="" dr...able="9.6 GiB"
+Jan 29 03:27:41 qemux86-64 ollama[257]: time=2026-01-29T03:27:41.506Z level=INFO source=routes.go:1614 msg="server config" env="map[CUDA_VISIBLE_DEVICES: GGML_VK_VISIBLE_DEVICES: G...
+Jan 29 03:27:41 qemux86-64 ollama[257]: time=2026-01-29T03:27:41.509Z level=INFO source=images.go:499 msg="total blobs: 5"
+Jan 29 03:27:41 qemux86-64 ollama[257]: time=2026-01-29T03:27:41.509Z level=INFO source=images.go:506 msg="total unused blobs removed: 0"
+Jan 29 03:27:41 qemux86-64 ollama[257]: time=2026-01-29T03:27:41.509Z level=INFO source=routes.go:1667 msg="Listening on 127.0.0.1:11434 (version 0.14.2)"
+Jan 29 03:27:41 qemux86-64 ollama[257]: time=2026-01-29T03:27:41.510Z level=INFO source=runner.go:67 msg="discovering available GPUs..."
+Jan 29 03:27:41 qemux86-64 ollama[257]: time=2026-01-29T03:27:41.513Z level=INFO source=server.go:429 msg="starting runner" cmd="/usr/bin/ollama runner --ollama-engine --port 32899"
+Jan 29 03:27:41 qemux86-64 ollama[257]: time=2026-01-29T03:27:41.580Z level=INFO source=types.go:60 msg="inference compute" id=cpu library=cpu compute="" name=cpu des...able="9.6 GiB"
+Jan 29 03:27:41 qemux86-64 ollama[257]: time=2026-01-29T03:27:41.581Z level=INFO source=routes.go:1708 msg="entering low vram mode" "total vram"="0 B" threshold="20.0 GiB"
+Jan 29 03:27:49 qemux86-64 ollama[257]: [GIN] 2026/01/29 - 03:27:49 | 200 |      50.854µs |       127.0.0.1 | HEAD     "/"
+Jan 29 03:27:49 qemux86-64 ollama[257]: [GIN] 2026/01/29 - 03:27:49 | 200 |     102.923µs |       127.0.0.1 | GET      "/api/ps"
 Hint: Some lines were ellipsized, use -l to show in full.
 
 root@qemux86-64:~# ollama list
-NAME         ID              SIZE      MODIFIED
+NAME         ID              SIZE      MODIFIED     
 gemma2:2b    8ccf136fdd52    1.6 GB    14 years ago
 
 root@qemux86-64:~# ollama run gemma2:2b
->>> hi
-Hello! 👋  How can I help you today? 😊
+>>> hi, who are you
+Hi there! I'm Gemma, an AI assistant created by the Gemma team. 🤖  I'm here to help with any questions or tasks you might have. 😊 What can I do for you today? 
+
 
 >>> Send a message (/? for help)
+>>> /bye
+```
+
+## 6. Verify CPU is used
+```
+root@qemux86-64:~# ollama ps
+NAME         ID              SIZE      PROCESSOR    CONTEXT    UNTIL              
+gemma2:2b    8ccf136fdd52    2.1 GB    100% CPU     4096       4 minutes from now
 ```
 

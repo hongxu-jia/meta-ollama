@@ -19,11 +19,20 @@ revision: HEAD
 URI: git://github.com/openembedded/bitbake.git
 branch: master
 revision: HEAD
+
+URI: git://git.yoctoproject.org/meta-yocto optional for genericx86-64
+branch: master
+revision: HEAD
+
+URI: https://github.com/OE4T/meta-tegra.git optional for CUDA with NVIDIA GPU
+branch: master
+revision: HEAD
+
 ```
 
 ## Project License
 ```
-Copyright (C) 2024 Wind River Systems, Inc.
+Copyright (C) 2026 Wind River Systems, Inc.
 
 All metadata is MIT licensed unless otherwise stated. Source code included
 in tree for individual recipes is under the LICENSE stated in each recipe
@@ -50,7 +59,7 @@ and assume ay risks associated with your exercise of permissions under the licen
 ```
 
 ## Build
-See BUILD.md for detail
+See BUILD.md and BUILD-cuda-x86-64.md for detail
 
 ## Maintainer
 See MAINTAINERS.md for detail
