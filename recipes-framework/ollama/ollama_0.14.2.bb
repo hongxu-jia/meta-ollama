@@ -23,6 +23,10 @@ DEPENDS += " \
     rsync-native \
 "
 
+RDEPENDS:${PN} += " \
+    ca-certificates \
+"
+
 OECMAKE_SOURCEPATH = "${S}/src/import"
 
 export OECMAKE_FORCE_CROSSCOMPILING = '1'
