@@ -12,3 +12,9 @@ LICESE_SHA256 = "6e4c38e1172f42fdbff13edf9a7a017679fb82b0fde415a3e8b3c31c6ed4a4e
 TEMPLATE_SHA256 = "369ca498f347f710d068cbb38bf0b8692dd3fa30f30ca2ff755e211c94768150"
 
 inherit ollama-model
+
+FILES:${PN}-common += " \
+    ${datadir}/ollama/models/blobs/sha256-${PARAMS_SHA256} \
+    ${datadir}/ollama/models/blobs/sha256-${TEMPLATE_SHA256} \
+"
+

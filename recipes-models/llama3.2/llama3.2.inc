@@ -28,3 +28,7 @@ do_install:append() {
     chown -R ollama:ollama ${D}${datadir}/ollama
 }
 
+FILES:${PN}-common += " \
+    ${datadir}/ollama/models/blobs/sha256-${LICESE_2_SHA256} \
+    ${datadir}/ollama/models/blobs/sha256-${TEMPLATE_SHA256} \
+"

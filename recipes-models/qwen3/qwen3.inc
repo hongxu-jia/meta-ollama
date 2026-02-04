@@ -10,3 +10,6 @@ PARAMS_SHA256 = "cff3f395ef3756ab63e58b0ad1b32bb6f802905cae1472e6a12034e4246fbbd
 
 inherit ollama-model
 
+FILES:${PN}-common += " \
+    ${datadir}/ollama/models/blobs/sha256-${PARAMS_SHA256} \
+"

@@ -9,3 +9,8 @@ PARAMS_SHA256 = "2490e7468436707d5156d7959cf3c6341cc46ee323084cfa3fcf30fe76e397d
 LICESE_SHA256 = "097a36493f718248845233af1d3fefe7a303f864fae13bc31a3a9704229378ca"
 
 inherit ollama-model
+
+FILES:${PN}-common += " \
+    ${datadir}/ollama/models/blobs/sha256-${PARAMS_SHA256} \
+"
+

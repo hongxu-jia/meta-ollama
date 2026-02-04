@@ -41,13 +41,26 @@ do_install() {
 
 inherit useradd
 
-USERADD_PACKAGES = "${PN}"
+USERADD_PACKAGES = "${PN} ${PN}-common"
 USERADD_PARAM:${PN} = " \
     --system --shell /bin/false \
     --user-group --groups video,render \
     --create-home --home-dir /usr/share/ollama \
     ollama"
+USERADD_PARAM:${PN}-common = " \
+    --system --shell /bin/false \
+    --user-group --groups video,render \
+    --create-home --home-dir /usr/share/ollama \
+    ollama"
 GROUPADD_PARAM:${PN} = "-r render"
+GROUPADD_PARAM:${PN}-common = "-r render"
+
+PACKAGES =+ "${PN}-common"
+FILES:${PN}-common = " \
+    ${datadir}/ollama/models/blobs/sha256-${LICESE_SHA256} \
+"
+RPROVIDES:${PN}-common += "${BPN}-common"
+RDEPENDS:${PN} += "${BPN}-common"
 
 FILES:${PN} += "${datadir}"
 
