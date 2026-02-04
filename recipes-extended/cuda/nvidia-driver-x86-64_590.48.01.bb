@@ -19,15 +19,6 @@ RDEPENDS:${PN} = " \
     pciutils \
 "
 
-NVIDIA_DRIVERS ?= " \
-    libnvidia-ml \
-    libcuda \
-    libcudadebugger \
-    libnvidia-nvvm \
-    libnvidia-gpucomp \
-    libnvidia-ptxjitcompiler \
-"
-
 do_install:append () {
     install -d ${D}${base_libdir}/firmware/nvidia/${PV}
     cp ${S}/firmware/* ${D}${base_libdir}/firmware/nvidia/${PV}
@@ -42,10 +33,22 @@ do_install:append () {
     install -m 0644 ${UNPACKDIR}/nvidia-device.service ${D}${systemd_unitdir}/system
 }
 
-FILES:${PN} += " \
+PACKAGES =+ "${PN}-compute"
+
+FILES:${PN}-compute += " \
+    ${base_libdir}/libcuda.so* \
+    ${base_libdir}/libcudadebugger.so* \
+    ${base_libdir}/libnvidia-ml.so* \
+    ${base_libdir}/libnvidia-nvvm.so* \
+    ${base_libdir}/libnvidia-nvvm70.so* \
+    ${base_libdir}/libnvidia-opencl.so* \
+    ${base_libdir}/libnvidia-ptxjitcompiler.so* \
     ${base_libdir}/nvidia_drv.so \
     ${base_libdir}/firmware \
+    ${sbindir}/nvidia-smi \
     /lib64 \
     ${systemd_unitdir} \
 "
-SYSTEMD_SERVICE:${PN} = "nvidia-device.service"
+
+INSANE_SKIP:${PN}-compute = "already-stripped file-rdeps dev-so ldflags arch"
+SYSTEMD_SERVICE:${PN}-compute = "nvidia-device.service"

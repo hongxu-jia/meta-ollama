@@ -35,7 +35,7 @@ INSANE_SKIP:${PN} += "already-stripped buildpaths"
 NVDIA_CUDA ?= ""
 NVDIA_CUDA:x86-64 = " \
     nvidia-open-gpu-kernel-module \
-    nvidia-driver-x86-64 \
+    nvidia-driver-x86-64-compute \
 "
 RDEPENDS:${PN} += " \
     ${NVDIA_CUDA} \
