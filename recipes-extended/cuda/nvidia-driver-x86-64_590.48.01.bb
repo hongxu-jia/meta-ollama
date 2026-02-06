@@ -51,4 +51,5 @@ FILES:${PN}-compute += " \
 "
 
 INSANE_SKIP:${PN}-compute = "already-stripped file-rdeps dev-so ldflags arch"
+SYSTEMD_PACKAGES = "${PN}-compute"
 SYSTEMD_SERVICE:${PN}-compute = "nvidia-device.service"
