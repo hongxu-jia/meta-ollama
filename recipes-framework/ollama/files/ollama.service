@@ -11,6 +11,7 @@ Restart=on-failure
 RestartSec=5
 Environment="PATH=/usr/bin:/bin:/usr/sbin:/sbin"
 Environment="OLLAMA_MODELS=/usr/share/ollama/models"
+Environment="OLLAMA_HOST=0.0.0.0:11434"
 
 [Install]
 WantedBy=default.target
